@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 #########################
 # Labergère
 # Rémi
@@ -10,21 +13,19 @@
 # Helpers / Utility functions
 #############################
 from math import *
-from imp import reload
 import sys
-import platform
-os = platform.system()
-print()
-print(65*"#")
-print("Base encoding is " + sys.getfilesystemencoding())
-print("OS detected : " + os)
-reload(sys)
-sys.setfilesystemencoding("latin-1" if os == "Windows" else "utf-8")
-print("Using " + sys.getfilesystemencoding() + " encoding as a result.")
-print("Test : éèàù")
-print("OS-based encoding is experimental and may not be 100% accurate.")
-print(65*"#")
-print()
+
+
+# Adding compatibility for Python 3+
+version = sys.version.split(" ")[0]
+print("")
+print("Using Python " + str(version))
+if version.startswith("3"):
+    print("Adding compatibility functions for Python 3")
+    print("")
+
+    def raw_input(string):
+        return input(string)
 
 
 def str_is_int(string):
@@ -41,7 +42,7 @@ def str_is_int(string):
 def exercise_1_1():
     in_sec = -1  # Initialization of in_sec variable to remove further warnings about undefined variable
     while True:  # Infinite loop. Will break out when all conditions are verified.
-        in_sec = input("Veuillez entrer un nombre de secondes à convertir en heures minutes et secondes : ")
+        in_sec = raw_input("Veuillez entrer un nombre de secondes à convertir en heures minutes et secondes : ")
         if not str_is_int(in_sec):
             print("Vous devez spécifier un nombre en entrée !")
         elif int(in_sec) < 0:
@@ -67,7 +68,7 @@ def exercise_1_1():
 def exercise_1_2():
     in_radius = -1  # Initialization of in_sec variable to remove further warnings about undefined variable
     while True:  # Infinite loop. Will break out when all conditions are verified.
-        in_radius = input("Veuillez préciser un rayon : ")
+        in_radius = raw_input("Veuillez préciser un rayon : ")
         if not str_is_int(in_radius):
             print("Vous devez spécifier un nombre en entrée !")
         elif int(in_radius) < 0:
@@ -90,9 +91,9 @@ def exercise_1_3():
     test_again = True
     while test_again:  # Infinite loop. Will break out when all conditions are verified.
         while True:
-            in_a = input("Entrez un nombre a : ")
-            in_b = input("Entrez un nombre b : ")
-            in_c = input("Entrez un nombre c : ")
+            in_a = raw_input("Entrez un nombre a : ")
+            in_b = raw_input("Entrez un nombre b : ")
+            in_c = raw_input("Entrez un nombre c : ")
             a, b, c = 0, 0, 0
             if not (str_is_int(in_a) and str_is_int(in_b) and str_is_int(in_c)):
                 print("Vous devez entrer des nombres uniquement !")
@@ -100,7 +101,6 @@ def exercise_1_3():
                 a, b, c = int(in_a), int(in_b), int(in_c)
                 break
         # Tested program
-        m = 0
         if a > b:
             if a > c:
                 m = a
@@ -113,8 +113,8 @@ def exercise_1_3():
                 m = c
         # End of tested program
         print("Maximum retourné par le programme : " + str(m))
-        print()
-        answer = input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
             test_again = False
 
@@ -127,9 +127,9 @@ def exercise_1_4():
     while test_again:  # Infinite loop. Will break out when all conditions are verified.
         a, b, c = 0, 0, 0
         while True:
-            in_a = input("Entrez la 1ère note : ")
-            in_b = input("Entrez la 2nde note : ")
-            in_c = input("Entrez la 3ème note : ")
+            in_a = raw_input("Entrez la 1ère note : ")
+            in_b = raw_input("Entrez la 2nde note : ")
+            in_c = raw_input("Entrez la 3ème note : ")
             if not (str_is_int(in_a) and str_is_int(in_b) and str_is_int(in_c)):
                 print("Vous devez entrer des nombres uniquement !")
             elif not (0 < int(in_a) < 20 and 0 < int(in_b) < 20 and 0 < int(in_c) < 20):
@@ -139,8 +139,8 @@ def exercise_1_4():
                 break
         moy = (a + b + c) / 3
         print("La moyenne des 3 notes est de " + ("{0:.2f}".format(moy)))
-        print()
-        answer = input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
             test_again = False
 
@@ -160,7 +160,7 @@ def exercise_1_5():
     print("Après échange :")
     print(" - x vaut : " + str(x))
     print(" - y vaut : " + str(y))
-    print()
+    print("")
     x, y = 1, 2
     print("# Exchange with multiple affectation #")
     print("Initialement :")
@@ -181,7 +181,7 @@ def main():
         ex_to_test = 0
         func_name = ""
         while True:  # Infinite loop. Will break out when all conditions are verified.
-            ex_to_test = input("Veuillez entrer le numéro de l'exercice à tester : ")
+            ex_to_test = raw_input("Veuillez entrer le numéro de l'exercice à tester : ")
             func_name = "exercise_" + ex_to_test.replace(".", "_")
             if func_name not in globals():
                 print("L'exercice " + ex_to_test + " n'existe pas ou n'a pas encore été traité.")
@@ -191,25 +191,25 @@ def main():
                     if "exercise_" not in func:
                         continue
                     exercises.append(func.replace("exercise_", "").replace("_", "."))
-                for ex in reversed(exercises):
+                for ex in sorted(exercises):
                     print(" - " + ex)
-                print()
+                print("")
             else:
                 break
-        print()
+        print("")
         print(20 * "#")
         print("# Exercice " + ex_to_test)
         print(20 * "#")
-        print()
+        print("")
         globals()[func_name]()
-        print()
+        print("")
         print(20 * "#")
-        print()
-        answer = input("Voulez vous tester un autre exercice ? (y/n) : ")
+        print("")
+        answer = raw_input("Voulez vous tester un autre exercice ? (y/n) : ")
         if answer != "y":
             test_again = False
         else:
-            print()
+            print("")
     print("Au revoir !")
 
 
