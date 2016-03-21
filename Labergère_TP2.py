@@ -26,7 +26,9 @@ if version.startswith("3"):
 
     def raw_input(string):
         return input(string)
-
+else:
+    print("Adding compatibility functions for Python 2")
+    from __future__ import division
 
 def str_is_int(string):
     try:
