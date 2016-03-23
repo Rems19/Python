@@ -12,6 +12,7 @@
 #############################
 # Helpers / Utility functions
 #############################
+from __future__ import division
 from math import *
 import sys
 
@@ -26,9 +27,7 @@ if version.startswith("3"):
 
     def raw_input(string):
         return input(string)
-else:
-    print("Adding compatibility functions for Python 2")
-    from __future__ import division
+
 
 def str_is_int(string):
     try:
@@ -50,51 +49,72 @@ def str_is_numeric(string):
     return str_is_int(string) or str_is_float(string)
 
 
+"""
+CHAPITRE 1
+"""
+
+
 #########################
 # Exercice 1.1
 #########################
 def exercise_1_1():
-    in_sec = -1  # Initialization of in_sec variable to remove further warnings about undefined variable
-    while True:  # Infinite loop. Will break out when all conditions are verified.
-        in_sec = raw_input("Veuillez entrer un nombre de secondes à convertir en heures minutes et secondes : ")
-        if not str_is_int(in_sec):
-            print("Vous devez spécifier un nombre en entrée !")
-        elif int(in_sec) < 0:
-            print("Vous ne pouvez pas convertir un nombre négatif de secondes !")
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_sec = -1
+        while True:  # Infinite loop. Will break out when all conditions are verified.
+            in_sec = raw_input("Veuillez entrer un nombre de secondes à convertir en heures minutes et secondes : ")
+            if not str_is_int(in_sec):
+                print("Vous devez spécifier un nombre en entrée !")
+            elif int(in_sec) < 0:
+                print("Vous ne pouvez pas convertir un nombre négatif de secondes !")
+            else:
+                in_sec = int(in_sec)
+                break
+        hours = in_sec // 3600
+        mins = (in_sec % 3600) // 60
+        secs = (in_sec % 3600) % 60
+        time_str = ""
+        if hours != 0:
+            time_str += str(hours) + " heure" + ("s " if hours > 1 else " ")
+        if mins != 0:
+            time_str += str(mins) + " minute" + ("s et " if mins > 1 else " et ")
+        time_str += str(secs) + " seconde" + ("s." if secs > 1 else ".")
+        print(str(in_sec) + " seconde" + ("s sont égales" if in_sec > 1 else " est égale") + " à " + time_str)
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
         else:
-            in_sec = int(in_sec)
-            break
-    hours = in_sec // 3600
-    mins = (in_sec % 3600) // 60
-    secs = (in_sec % 3600) % 60
-    time_str = ""
-    if hours != 0:
-        time_str += str(hours) + " heure" + ("s " if hours > 1 else " ")
-    if mins != 0:
-        time_str += str(mins) + " minute" + ("s et " if mins > 1 else " et ")
-    time_str += str(secs) + " seconde" + ("s." if secs > 1 else ".")
-    print(str(in_sec) + " seconde" + ("s sont égales" if in_sec > 1 else " est égale") + " à " + time_str)
+            print("")
 
 
 #########################
 # Exercice 1.2
 #########################
 def exercise_1_2():
-    in_radius = -1  # Initialization of in_sec variable to remove further warnings about undefined variable
-    while True:  # Infinite loop. Will break out when all conditions are verified.
-        in_radius = raw_input("Veuillez préciser un rayon : ")
-        if not str_is_int(in_radius):
-            print("Vous devez spécifier un nombre en entrée !")
-        elif int(in_radius) < 0:
-            print("Vous devez entrer un rayon positif !")
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_radius = -1  # Initialization of in_sec variable to remove further warnings about undefined variable
+        while True:  # Infinite loop. Will break out when all conditions are verified.
+            in_radius = raw_input("Veuillez préciser un rayon : ")
+            if not str_is_int(in_radius):
+                print("Vous devez spécifier un nombre en entrée !")
+            elif int(in_radius) < 0:
+                print("Vous devez entrer un rayon positif !")
+            else:
+                in_radius = int(in_radius)
+                break
+        perimeter = 2 * pi * in_radius
+        area = pi * (in_radius ** 2)
+        print("Un disque de rayon " + str(in_radius) + " a pour propriétés :")
+        print(" - Un périmètre de " + str("{0:.2f}".format(perimeter)))
+        print(" - Une aire de " + str("{0:.2f}".format(area)))
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
         else:
-            in_radius = int(in_radius)
-            break
-    perimeter = 2 * pi * in_radius
-    area = pi * (in_radius ** 2)
-    print("Un disque de rayon " + str(in_radius) + " a pour propriétés :")
-    print(" - Un périmètre de " + str("{0:.2f}".format(perimeter)))
-    print(" - Une aire de " + str("{0:.2f}".format(area)))
+            print("")
 
 
 #########################
@@ -131,6 +151,8 @@ def exercise_1_3():
         answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
             test_again = False
+        else:
+            print("")
 
 
 #########################
@@ -351,6 +373,215 @@ def exercise_1_9():
             print("")
 
 
+"""
+CHAPITRE 2
+"""
+
+
+#########################
+# Exercice 2.1
+#########################
+def exercise_2_1():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_width, in_height = 0, 0
+        while True:
+            in_width = raw_input("Entrez la largeur : ")
+            in_height = raw_input("Entrez la hauteur : ")
+            if not (str_is_int(in_width) and str_is_int(in_height)):
+                print("Vous ne pouvez entrer que des nombres !")
+            elif not (0 < int(in_width) <= 80 and 0 < int(in_height) <= 25):
+                print("La largeur doit être comprise entre 1 et 80 et la hauteur entre 1 et 25")
+            else:
+                break
+        in_char = "*"
+        while True:
+            in_char = raw_input("Entrez le caractère à utiliser : ")
+            if len(in_char) != 1:
+                print("Vous devez entrer un seul caractère !")
+            else:
+                break
+        in_mode = 0
+        while True:
+            in_mode = raw_input("Sélectionnez le mode (1 = rectangle, 2 = cadre) : ")
+            if not (str_is_int(in_mode) and int(in_mode) in (1, 2)):
+                print("Le mode sélectionné n'est pas correct !")
+            else:
+                break
+        mode, width, height = int(in_mode), int(in_width), int(in_height)
+        for h in range(0, height):
+            line = ""
+            for w in range(0, width):
+                if mode == 1 or h == 0 or h == height - 1 or w == 0 or w == width - 1:
+                    line += in_char
+                else:
+                    line += " "
+            print(line)
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.2
+#########################
+def exercise_2_2():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_size = 0
+        while True:
+            in_size = raw_input("Entrez la taille du modèle : ")
+            if not (str_is_int(in_size) and 0 < int(in_size)):
+                print("La taille doit être un entier strictement positif !")
+            else:
+                break
+        in_char = "*"
+        while True:
+            in_char = raw_input("Entrez le caractère à utiliser : ")
+            if len(in_char) != 1:
+                print("Vous devez entrer un seul caractère !")
+            else:
+                break
+        in_model = 0
+        while True:
+            in_model = raw_input("Sélectionnez le modèle (1 à 4) : ")
+            if not (str_is_int(in_model) and int(in_model) in range(1, 5)):
+                print("Le modèle sélectionné n'est pas correct !")
+            else:
+                break
+        model, size = int(in_model), int(in_size)
+        print("")
+        if model == 1:
+            for i in range(1, size + 1):
+                print((size - i) * " " + i * in_char)
+        elif model == 2:
+            for i in range(size, 0, -1):
+                print(i * in_char)
+        elif model == 3:
+            for i in range(1, size + 1):
+                print((size - i) * " " + (i * 2 - 1) * in_char + (size - i) * " ")
+        else:
+            for i in range(1, size + 1):
+                print(i * in_char)
+            for i in range(size - 1, 0, -1):
+                print(i * in_char)
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.3
+#########################
+def exercise_2_3():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        while True:
+            in_x = raw_input("Entrez la valeur de x : ")
+            if not (str_is_numeric(in_x)):
+                print("x doit être un nombre !")
+            else:
+                break
+        x = abs(float(in_x))
+        log_fct_result = log10(x)
+        magnitude = 0
+        print("")
+        while x >= 10:
+            x //= 10
+            magnitude += 1
+        print("L'ordre de grandeur de " + in_x + " est : 10^" + str(magnitude))
+        print("La valeur retournée par la fonction 'log10' du module 'math' est : {0:.5f}".format(log_fct_result) +
+              ("-" if log_fct_result < round(log_fct_result, 5) else "+"))
+        print("Le résultat est donc vérifié !" if magnitude == int(log_fct_result)
+              else "Il semble donc qu'il y ai eu un problème...")
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.4
+#########################
+def exercise_2_4():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        while True:
+            in_a = raw_input("Entrez la valeur de a : ")
+            in_b = raw_input("Entrez la valeur de b : ")
+            if not (str_is_int(in_a) and str_is_int(in_b)):
+                print("a et b doivent être des entiers !")
+            else:
+                break
+        ppcm = None
+        a, b, i = int(in_a), int(in_b), 1
+        while ppcm is None:
+            if modf(i / float(a))[0] == modf(i / float(b))[0] == 0:
+                ppcm = i
+            else:
+                i += 1
+        print("Le PPCM de " + in_a + " et " + in_b + " est " + str(ppcm) +
+              " (" + str(ppcm / a) + "x" + in_a + " et " + str(ppcm / b) + "x" + in_b + ")")
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.5
+#########################
+def exercise_2_5():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        while True:
+            in_n = raw_input("Entrez la valeur de n : ")
+            if not (str_is_int(in_n) and int(in_n) >= 0):
+                print("n doit être un nombre !")
+            else:
+                break
+        n = int(in_n)
+        n_fact, n_sum, n_is_prime, div = 1, 0, True, 0
+        for i in range(1, n + 1):
+            n_fact *= i
+            n_sum += i
+            if n_is_prime and i != 1 and i != n and modf(float(n) / i)[0] == 0:
+                n_is_prime = False
+                div = i
+        print(in_n + "! = " + str(n_fact))
+        print("Somme des entiers de " + ("0" if n == 0 else "1") + " à " + in_n + " : " + str(n_sum))
+        print(in_n + (" est premier." if n_is_prime else " n'est pas premier. (divisible par " + str(div) + ")"))
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.7
+#########################
+def exercise_2_7():
+    to_999, to_9999 = 0, 0
+    for i in range(1, 1000):
+        if i < 1000:
+            to_999 += str(i).count("1")
+        to_9999 += str(i).count("1")
+    print("Il y a " + str(to_999) + " '1' dans les nombres de 1 à 999 et " + str(to_9999) + " dans ceux de 1 à 9999.")
+    print("")
+
+
 #########################
 # Main Function
 #########################
@@ -370,8 +601,9 @@ def main():
                     if "exercise_" not in func:
                         continue
                     exercises.append(func.replace("exercise_", "").replace("_", "."))
-                for ex in sorted(exercises):
-                    print(" - " + ex)
+                exercises.sort()
+                for i in range(0, len(exercises), 2):
+                    print(" - " + exercises[i] + ("    - " + exercises[i + 1] if len(exercises) > i + 1 else ""))
                 print("")
             else:
                 break
