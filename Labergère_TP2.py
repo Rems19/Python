@@ -14,6 +14,7 @@
 #############################
 from __future__ import division
 from math import *
+from random import *
 import sys
 
 
@@ -43,6 +44,13 @@ def str_is_float(string):
         return True
     except ValueError:
         return False
+
+
+def str_is_bin(string):
+    for c in string:
+        if not c in ("0", "1", "b"):
+            return False
+    return True
 
 
 def str_is_numeric(string):
@@ -570,6 +578,32 @@ def exercise_2_5():
 
 
 #########################
+# Exercice 2.6
+#########################
+def exercise_2_6():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_n = ""
+        while True:
+            in_n = raw_input("Entrez le nombre de lancé à effectuer : ")
+            if not (str_is_int(in_n) and int(in_n) > 0):
+                print("n doit être un nombre positif !")
+            else:
+                break
+        n = int(in_n)
+        results = dict()
+        for i in range(0, n):
+            results[i] = randint(2, 12)
+        print(results.values())
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
 # Exercice 2.7
 #########################
 def exercise_2_7():
@@ -580,6 +614,112 @@ def exercise_2_7():
         to_9999 += str(i).count("1")
     print("Il y a " + str(to_999) + " '1' dans les nombres de 1 à 999 et " + str(to_9999) + " dans ceux de 1 à 9999.")
     print("")
+
+
+#########################
+# Exercice 2.8
+#########################
+def exercise_2_8():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_n = ""
+        while True:
+            in_n = raw_input("Entrez la valeur de n : ")
+            if not (str_is_int(in_n) and 0 < int(in_n) <= 100):
+                print("n doit être un nombre positif compris entre 1 et 100 !")
+            else:
+                break
+        n = int(in_n)
+        max_mult = int(ceil(100 // n))
+        for mult in range(0, min(10, max_mult)):
+            m = mult
+            line = ""
+            while True:
+                if m > max_mult:
+                    break
+                line += (("{0:" + str(len(in_n)) + "} x {1:" + str(len(str(m))) + "} = {2:3}     ")
+                         .format(n, m, n * m))
+                m += 10
+            print(line)
+        print("")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.9
+#########################
+def exercise_2_9():
+    n = 1
+    while True:
+        frac_sum = 0
+        for k in range(1, n + 1):
+            frac_sum += 1 / k
+        if frac_sum >= 5:
+            break
+        n += 1
+    print("Le plus petit entier n non nul vérifiant 'somme(1/k, k : (1 -> n)) >= 5' est : n = " + str(n))
+
+
+#########################
+# Exercice 2.10
+#########################
+def exercise_2_10():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_n = ""
+        while True:
+            in_n = raw_input("Entrez la valeur de n : ")
+            if not (str_is_int(in_n) and int(in_n) > 0):
+                print("n doit être un nombre positif !")
+            else:
+                break
+        n = int(in_n)
+        if n < 2:
+            n_fib = 1
+        else:
+            fibonacci = [1, 1]
+            for i in range(2, n):
+                fibonacci.append(fibonacci[i - 2] + fibonacci[i - 1])
+            print(fibonacci)
+            n_fib = fibonacci[n - 1]
+        print("Le " + str(n) + ("er" if n == 1 else "ème") + " terme de la suite de Fibonacci est : " +
+              str(n_fib) + "\n")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 2.11
+#########################
+def exercise_2_11():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_bin = ""
+        in_base = ""
+        while True:
+            in_bin = str(raw_input("Entrez un nombre binaire : ")).replace("0b", "").replace(" ", "")
+            in_base = raw_input("En quelle base voulez-vous le convertir ? ")
+            if not (str_is_bin(in_bin) and 3 <= int(in_base) <= 36):
+                print("Vous devez entrer un nombre binaire et une base entre 3 et 36 !")
+            else:
+                break
+        base, rev_bin = int(in_base), in_bin[::-1]
+        result = 0
+        for i in range(0, len(rev_bin)):
+            result += (2 ** i) * int(rev_bin[i])
+        print("La valeur de {} en base {} est : {}\n".format(in_bin, base, result))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
 
 
 #########################
