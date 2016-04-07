@@ -30,6 +30,9 @@ if version.startswith("3"):
         return input(string)
 
 
+baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
 def str_is_int(string):
     try:
         int(string)
@@ -46,9 +49,12 @@ def str_is_float(string):
         return False
 
 
-def str_is_bin(string):
+def str_is_base(string, base):
+    if not str_is_int(base):
+        return False
     for c in string:
-        if not c in ("0", "1", "b"):
+        print("DEBUG: " + baseChars[0:base])
+        if c not in baseChars[0:base]:
             return False
     return True
 
@@ -701,20 +707,27 @@ def exercise_2_10():
 def exercise_2_11():
     test_again = True
     while test_again:  # Infinite loop. Will break out when all conditions are verified.
-        in_bin = ""
+        in_nb = ""
         in_base = ""
+        to_base = ""
         while True:
-            in_bin = str(raw_input("Entrez un nombre binaire : ")).replace("0b", "").replace(" ", "")
-            in_base = raw_input("En quelle base voulez-vous le convertir ? ")
-            if not (str_is_bin(in_bin) and 3 <= int(in_base) <= 36):
-                print("Vous devez entrer un nombre binaire et une base entre 3 et 36 !")
+            in_nb = str(raw_input("Entrez un nombre brut, sans indication de base : "))
+            in_base = raw_input("En quelle base avez-vous entré votre nombre ? ")
+            to_base = raw_input("En quelle base voulez-vous le convertir ? ")
+            if not (2 <= int(in_base) <= 36 and 2 <= int(to_base) <= 36 and str_is_base(in_nb, int(in_base))):
+                print("Vous devez entrer un nombre quelconque et des bases entre 2 et 36 !")
             else:
                 break
-        base, rev_bin = int(in_base), in_bin[::-1]
-        result = 0
-        for i in range(0, len(rev_bin)):
-            result += (2 ** i) * int(rev_bin[i])
-        print("La valeur de {} en base {} est : {}\n".format(in_bin, base, result))
+        from_base, to_base = int(in_base), int(to_base)
+        base10_value = 0
+        for i in range(len(in_nb)):
+            base10_value += baseChars.find(in_nb[i]) * (from_base ** (len(in_nb) - 1 - i))
+        result = ""
+        while base10_value >= to_base:
+            result = baseChars[base10_value % to_base] + result
+            base10_value //= to_base
+        result = baseChars[base10_value] + result
+        print("La valeur de {} (base {}) en base {} est : {}\n".format(in_nb, in_base, to_base, result))
         answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
             test_again = False
