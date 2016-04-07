@@ -53,7 +53,6 @@ def str_is_base(string, base):
     if not str_is_int(base):
         return False
     for c in string:
-        print("DEBUG: " + baseChars[0:base])
         if c not in baseChars[0:base]:
             return False
     return True
