@@ -14,7 +14,6 @@
 #############################
 from __future__ import division
 from math import *
-from random import *
 import sys
 
 
@@ -254,13 +253,17 @@ def exercise_1_6():
         delta = b * b - 4 * a * c
         print("Le discriminant est : Δ = " + "{0:.2f}".format(delta))
         if delta < 0:
-            print("Δ < 0 donc aucune racine.")
+            sqrt_mdelta = sqrt(-delta)
+            x1 = "({} - {:.2f}i) / {}".format(-b, sqrt_mdelta, 2 * a)
+            x2 = "({} + {:.2f}i) / {}".format(-b, sqrt_mdelta, 2 * a)
+            print ("Δ < 0 donc deux racines complexes :")
+            print ("x1 = " + x1 + "\nx2 = " + x2)
         elif delta == 0:
             x1 = -b / (2 * a)
-            print("Δ = 0 donc une seule racine : x = " + "{0:.2f}".format(x1))
+            print("Δ = 0 donc une seule racine réelle : x = " + "{0:.2f}".format(x1))
         else:
             x1, x2 = (-b - sqrt(delta)) / (2 * a), (-b + sqrt(delta)) / (2 * a)
-            print("Δ > 0 donc deux racines : x1 = " + "{0:.2f}".format(x1) + " et x2 = " + "{0:.2f}".format(x2))
+            print("Δ > 0 donc deux racines réelles : x1 = " + "{0:.2f}".format(x1) + " et x2 = " + "{0:.2f}".format(x2))
         print("")
         answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
@@ -583,32 +586,6 @@ def exercise_2_5():
 
 
 #########################
-# Exercice 2.6
-#########################
-def exercise_2_6():
-    test_again = True
-    while test_again:  # Infinite loop. Will break out when all conditions are verified.
-        in_n = ""
-        while True:
-            in_n = raw_input("Entrez le nombre de lancé à effectuer : ")
-            if not (str_is_int(in_n) and int(in_n) > 0):
-                print("n doit être un nombre positif !")
-            else:
-                break
-        n = int(in_n)
-        results = dict()
-        for i in range(0, n):
-            results[i] = randint(2, 12)
-        print(results.values())
-        print("")
-        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
-        if answer != "y":
-            test_again = False
-        else:
-            print("")
-
-
-#########################
 # Exercice 2.7
 #########################
 def exercise_2_7():
@@ -699,6 +676,21 @@ def exercise_2_10():
         else:
             print("")
 
+    """
+    Méthode math :
+
+    u(n+2) = u(n+1) + u(n) -> Equation carac : r^2 - r - 1 = 0
+    Δ = 1 + 4 = 5 > 0 -> 2 racines réelles
+    r1 = (1 - sqrt(5)) / 2
+    r2 = (1 + sqrt(5)) / 2
+    Donc u(n) = A((1 - sqrt(5)) / 2)^n + B((1 + sqrt(5)) / 2)^n
+    On a u(0) = 0 et u(1) = 1 donc on a :
+     • A + B = 0
+     • A((1 - sqrt(5)) / 2) + B((1 + sqrt(5)) / 2) = 1
+    Ce qui donne A = -1 / sqrt(5) et B = 1 / sqrt(5)
+    On a donc u(n) = (-1 / sqrt(5))((1 - sqrt(5)) / 2)^n + (1 / sqrt(5))((1 + sqrt(5)) / 2)^n
+    """
+
 
 #########################
 # Exercice 2.11
@@ -732,6 +724,184 @@ def exercise_2_11():
             test_again = False
         else:
             print("")
+
+
+#########################
+# Exercice 3.1
+#########################
+def exercise_3_1():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        alphabet = baseChars[10:].lower()
+        print("{0:26} : {1}".format("z", alphabet[-1]))
+        print("{0:26} : {1}".format("zyxwvutsrqponmlkjihgfedcba", alphabet[::-1]))
+        print("{0:26} : {1}".format("efgh", alphabet[4:8]))
+        print("{0:26} : {1}".format("uvwx", alphabet[-6:-2]))
+        print("{0:26} : {1}".format("vwxyz", alphabet[-5:]))
+        print("{0:26} : {1}".format("fhjlnprtvxz", alphabet[5::2]))
+        print("{0:26} : {1}".format("yvspmjgd", alphabet[-2:2:-3]))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 3.2
+#########################
+def exercise_3_2():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        objects = list()
+        ints, floats = True, False
+        while True:
+            in_str = raw_input("Entrez une valeur ou \"fin\" pour arrêter : ")
+            if in_str.lower() == "fin":
+                break
+            else:
+                if str_is_int(in_str):
+                    objects.append(int(in_str))
+                elif str_is_numeric(in_str):
+                    objects.append(float(in_str))
+                    if ints:
+                        ints, floats = False, True
+                else:
+                    objects.append(in_str)
+                    ints, floats = False, False
+        print("Liste des éléments :")
+        print(objects)
+        print("C'est une liste de : " + ("entiers." if ints else ("flottants." if floats else "strs.")))
+        print("(C'est le type le moins large englobant tous les objets de la liste)\n")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 3.3
+#########################
+def exercise_3_3():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        objects = list()
+        ints, floats = True, False
+        while True:
+            in_str = raw_input("Entrez une valeur ou \"fin\" pour arrêter : ")
+            if in_str.lower() == "fin":
+                break
+            else:
+                if str_is_int(in_str):
+                    objects.append(int(in_str))
+                elif str_is_numeric(in_str):
+                    objects.append(float(in_str))
+                    if ints:
+                        ints, floats = False, True
+                else:
+                    objects.append(in_str)
+                    ints, floats = False, False
+        while True:
+            print("Liste des éléments :")
+            print(objects)
+            in_e = raw_input("Entrez l'élément e pour lequel vérifier la présence ou \"fin\" pour arrêter : ")
+            if in_e == "fin":
+                break
+            elif str_is_int(in_e):
+                in_e = int(in_e)
+            elif str_is_numeric(in_e):
+                in_e = float(in_e)
+            in_list = False
+            for x in objects:
+                if in_e == x:
+                    in_list = True
+            print("L'élément e est-il dans la liste ?")
+            print(" • Selon la méthode manuelle : {}".format(in_list))
+            print(" • Selon la méthode de la fonction \"in\" : {}\n".format(in_e in objects))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 3.4
+#########################
+def exercise_3_4():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        nums = list()
+        while True:
+            in_str = raw_input("Entrez une valeur ou \"fin\" pour arrêter : ")
+            if in_str.lower() == "fin":
+                break
+            else:
+                if str_is_int(in_str):
+                    nums.append(int(in_str))
+                elif str_is_numeric(in_str):
+                    nums.append(float(in_str))
+                else:
+                    print("Vous ne pouvez entrer que des nombres !")
+        print("Liste des éléments :")
+        print(nums)
+        cos_list = list()
+        for x in nums:
+            cos_list.append((x, round(cos(x), 2)))
+        print("Liste de tuples créée :")
+        print(cos_list)
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 3.5
+#########################
+def exercise_3_5():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        nums = list()
+        while True:
+            in_str = raw_input("Entrez une valeur ou \"fin\" pour arrêter : ")
+            if in_str.lower() == "fin":
+                break
+            else:
+                if str_is_numeric(in_str):
+                    nums.append(float(in_str))
+                else:
+                    print("Vous ne pouvez entrer que des nombres !")
+        print("Liste des éléments :")
+        print(nums)
+        sum_l = 0.0
+        for x in nums:
+            sum_l += x
+        print("La moyenne des éléments de la liste est : {0:.3f}".format(sum_l / len(nums)))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+    """
+    Testé avec les valeurs de la liste [4.0, 9.0, 5.0, 4.6, 79.0, 3.14]
+    -> moyenne de 17.457, vérifiée également à la calculatrice.
+    """
+
+
+#########################
+# Exercice 3.6
+#########################
+def exercise_3_6():
+    i = 0
+    while True:
+        i += 1
+        res = str(i * 9)
+        if str(i)[::-1] == res:
+            break
+    print("Le plus petit entier tel que son multiple s'écrit comme ses chiffres inversés est : " + str(i))
 
 
 #########################
