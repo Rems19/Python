@@ -61,6 +61,10 @@ def str_is_numeric(string):
     return str_is_int(string) or str_is_float(string)
 
 
+def cust_round(x, base):
+    return int(base * round(float(x)/base))
+
+
 """
 CHAPITRE 1
 """
@@ -902,6 +906,61 @@ def exercise_3_6():
         if str(i)[::-1] == res:
             break
     print("Le plus petit entier tel que son multiple s'écrit comme ses chiffres inversés est : " + str(i))
+
+
+#########################
+# Exercice 3.7
+#########################
+def exercise_3_7():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        freq = dict()
+        in_str = raw_input("Entrez une chaîne de caractères : ")
+        in_str = str(in_str).replace(" ", "").replace(".", "").replace("'", "").replace("?", "")\
+            .replace(",", "").replace("!", "").replace("(", "").replace(")", "").replace("-", "")\
+            .replace(";", "").replace(":", "").replace("_", "").replace("é", "e").replace("è", "e")\
+            .replace("ê", "e").replace("à", "a").replace("ù", "u").replace("û", "u").replace("â", "a")\
+            .replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ç", "c").replace("ë", "e")\
+            .replace("\"", "").replace("–", "").replace("\n", "").lower()
+        """
+        lorem ipsum dolor sit amet consectetur adipiscing elit cras faucibus eros eget tempus elementum nunc massa egestas mauris et maximus dui lacus nec dolor nulla accumsan at augue id euismod suspendisse volutpat quam sit amet gravida cursus nulla mollis eget dolor in congue pellentesque ac neque at purus eleifend dignissim phasellus cursus nibh id cursus commodo nulla sem pulvinar eros placerat feugiat quam massa in nibh cras sagittis cursus tortor quisque a dui lacus mauris eu sem ut nisi maximus vehicula
+        """
+        for c in in_str:
+            freq[c] = (freq[c] + 1) if c in freq.keys() else 1
+        print("\nDictionnaire du nombre d'apparition des caractères :")
+        print(freq)
+        freq_l = list()
+        for c in sorted(freq.keys()):
+            freq_l.append((c, round(float(freq[c]) / len(in_str), 3)))
+        print("\nListe des fréquences des caractères :")
+        print(freq_l)
+        max_nb = (max(freq.values()) / float(len(in_str))) * 100
+        print("\nMax = " + str(max_nb))
+        rd_max_nb = int(cust_round(max_nb, 2))
+        print("Rounded max = " + str(rd_max_nb))
+        print("\n")
+        for i in range(rd_max_nb, 0, -2):
+            nb = (str(i) if i >= 10 else " " + str(i)) + " "
+            bars = ""
+            for c in freq_l:
+                if cust_round(c[1] * 100, 2) >= i:
+                    if not cust_round(c[1] * 100, 2) >= i + 2:
+                        bars += "* "
+                    else:
+                        bars += "| "
+                else:
+                    bars += "  "
+            print(nb + bars)
+        bottom = "   "
+        for c in freq_l:
+            bottom += c[0] + " "
+        print(bottom)
+        print("\n")
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
 
 
 #########################
