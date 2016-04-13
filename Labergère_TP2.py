@@ -260,8 +260,8 @@ def exercise_1_6():
             sqrt_mdelta = sqrt(-delta)
             x1 = "({} - {:.2f}i) / {}".format(-b, sqrt_mdelta, 2 * a)
             x2 = "({} + {:.2f}i) / {}".format(-b, sqrt_mdelta, 2 * a)
-            print ("Δ < 0 donc deux racines complexes :")
-            print ("x1 = " + x1 + "\nx2 = " + x2)
+            print("Δ < 0 donc deux racines complexes :")
+            print("x1 = " + x1 + "\nx2 = " + x2)
         elif delta == 0:
             x1 = -b / (2 * a)
             print("Δ = 0 donc une seule racine réelle : x = " + "{0:.2f}".format(x1))
@@ -916,15 +916,13 @@ def exercise_3_7():
     while test_again:  # Infinite loop. Will break out when all conditions are verified.
         freq = dict()
         in_str = raw_input("Entrez une chaîne de caractères : ")
-        in_str = str(in_str).replace(" ", "").replace(".", "").replace("'", "").replace("?", "")\
-            .replace(",", "").replace("!", "").replace("(", "").replace(")", "").replace("-", "")\
-            .replace(";", "").replace(":", "").replace("_", "").replace("é", "e").replace("è", "e")\
+        in_str = str(in_str).replace(" ", "").replace(".", "").replace("'", "").replace("’", "").replace("?", "")\
+            .replace(",", "").replace("!", "").replace("(", "").replace(")", "").replace("-", "").replace("“", "")\
+            .replace(";", "").replace(":", "").replace("_", "").replace("é", "e").replace("è", "e").replace("”", "")\
             .replace("ê", "e").replace("à", "a").replace("ù", "u").replace("û", "u").replace("â", "a")\
             .replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ç", "c").replace("ë", "e")\
-            .replace("\"", "").replace("–", "").replace("\n", "").lower()
-        """
-        lorem ipsum dolor sit amet consectetur adipiscing elit cras faucibus eros eget tempus elementum nunc massa egestas mauris et maximus dui lacus nec dolor nulla accumsan at augue id euismod suspendisse volutpat quam sit amet gravida cursus nulla mollis eget dolor in congue pellentesque ac neque at purus eleifend dignissim phasellus cursus nibh id cursus commodo nulla sem pulvinar eros placerat feugiat quam massa in nibh cras sagittis cursus tortor quisque a dui lacus mauris eu sem ut nisi maximus vehicula
-        """
+            .replace("\"", "").replace("–", "").replace("\n", "").replace("â", "a").replace("€", "")\
+            .replace("œ", "oe").lower()
         for c in in_str:
             freq[c] = (freq[c] + 1) if c in freq.keys() else 1
         print("\nDictionnaire du nombre d'apparition des caractères :")
