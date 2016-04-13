@@ -62,7 +62,7 @@ def str_is_numeric(string):
 
 
 def cust_round(x, base):
-    return int(base * round(float(x)/base))
+    return int(base * round(float(x) / base))
 
 
 """
@@ -208,6 +208,11 @@ def exercise_1_4():
             test_again = False
         else:
             print("")
+
+    """
+    Test effectué : 5 coeff 2 ; 10 coeff 1 ; 15 coeff 3
+    Résultat : 10.83 -> OK
+    """
 
 
 #########################
@@ -512,13 +517,17 @@ def exercise_2_3():
         log_fct_result = log10(x)
         magnitude = 0
         print("")
-        while x >= 10:
-            x //= 10
-            magnitude += 1
+        while not 1 <= x <= 10:
+            if x < 1:
+                x *= 10
+                magnitude -= 1
+            else:
+                x //= 10
+                magnitude += 1
         print("L'ordre de grandeur de " + in_x + " est : 10^" + str(magnitude))
         print("La valeur retournée par la fonction 'log10' du module 'math' est : {0:.5f}".format(log_fct_result) +
               ("-" if log_fct_result < round(log_fct_result, 5) else "+"))
-        print("Le résultat est donc vérifié !" if magnitude == int(log_fct_result)
+        print("Le résultat est donc vérifié !" if magnitude == floor(log_fct_result)
               else "Il semble donc qu'il y ai eu un problème...")
         print("")
         answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
@@ -526,6 +535,13 @@ def exercise_2_3():
             test_again = False
         else:
             print("")
+
+    """
+    Programme vérifié avec les valeurs suivantes :
+    0.1 -> -1
+    9 -> 1
+    4659 -> 4
+    """
 
 
 #########################
@@ -557,6 +573,13 @@ def exercise_2_4():
         else:
             print("")
 
+    """
+    Tests effectués :
+    6 et 4 -> 12
+    8 et 5 -> 40
+    6 et 8 -> 24
+    """
+
 
 #########################
 # Exercice 2.5
@@ -587,6 +610,11 @@ def exercise_2_5():
             test_again = False
         else:
             print("")
+
+    """
+    n = 5  -> a = 120       ; b = 15 ; c = True
+    n = 12 -> a = 479001600 ; b = 78 ; c = False (divisible par 2)
+    """
 
 
 #########################
@@ -709,7 +737,8 @@ def exercise_2_11():
             in_nb = str(raw_input("Entrez un nombre brut, sans indication de base : "))
             in_base = raw_input("En quelle base avez-vous entré votre nombre ? ")
             to_base = raw_input("En quelle base voulez-vous le convertir ? ")
-            if not (2 <= int(in_base) <= 36 and 2 <= int(to_base) <= 36 and str_is_base(in_nb, int(in_base))):
+            if not (str_is_int(in_base) and str_is_int(to_base) and 2 <= int(in_base) <= 36 and 2 <= int(to_base) <= 36
+                            and str_is_base(in_nb, int(in_base))):
                 print("Vous devez entrer un nombre quelconque et des bases entre 2 et 36 !")
             else:
                 break
@@ -728,6 +757,16 @@ def exercise_2_11():
             test_again = False
         else:
             print("")
+
+    """
+    Tests effectués :
+    ---------------------------------------
+    |   Hex   |  Dec  |        Bin        |
+    ---------------------------------------
+    |   B56   |  2902 |   101101010110    |
+    |   4A5   |  1189 |    10010100101    |
+    ---------------------------------------
+    """
 
 
 #########################
