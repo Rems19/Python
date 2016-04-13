@@ -1001,6 +1001,19 @@ def exercise_3_7():
 
 
 #########################
+# Exercice 3.8
+#########################
+def exercise_3_8():
+    dic = {"alice": 33, "bob": 40, "john": 40, "jack": 33, "kevin": 33}
+    rev_dic = dict()
+    for (key, value) in dic.items():
+        if value not in rev_dic:
+            rev_dic[value] = list()
+        rev_dic[value].append(key)
+    print(rev_dic)
+
+
+#########################
 # Main Function
 #########################
 def main():
