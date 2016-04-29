@@ -814,7 +814,7 @@ def exercise_3_2():
                     ints, floats = False, False
         print("Liste des éléments :")
         print(objects)
-        print("C'est une liste de : " + ("entiers." if ints else ("flottants." if floats else "strs.")))
+        print("C'est une liste " + ("d'entiers." if ints else ("de flottants." if floats else "de strings.")))
         print("(C'est le type le moins large englobant tous les objets de la liste)\n")
         answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
         if answer != "y":
@@ -1011,6 +1011,171 @@ def exercise_3_8():
             rev_dic[value] = list()
         rev_dic[value].append(key)
     print(rev_dic)
+
+
+#########################
+# Exercice 3.9
+#########################
+def exercise_3_9():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_n = ""
+        while True:
+            in_n = raw_input("Entrez le nombre de lignes du triangle de Pascal à afficher : ")
+            if not str_is_int(in_n):
+                print("Vous ne pouvez entrer que des nombres !")
+            else:
+                break
+        n = int(in_n)
+        tab = [[1], [1, 1]]
+        max_nb = 0
+        if n > 2:
+            for i in range(2, n):
+                line = [1]
+                for j in range(1, i):
+                    nb = tab[i - 1][j - 1] + tab[i - 1][j]
+                    line.append(nb)
+                    if max_nb < nb:
+                        max_nb = nb
+                line.append(1)
+                tab.append(line)
+        max_nb = len(str(max_nb))
+        print("Les " + in_n + " premières lignes du triangle de Pascal sont :")
+        for i in range(0, n):
+            line = (n - i) * max_nb * " "
+            for j in range(0, len(tab[i])):
+                line += ("{0:" + str(max_nb) + "}" + max_nb * " ").format(tab[i][j])
+            print(line)
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 4.1
+#########################
+def f_4_1(x, y):
+    return x * x * y * y + cos(y) / cos(x) - floor(x + y)
+
+
+def exercise_4_1():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_x, in_y = "", ""
+        while True:
+            in_x = raw_input("Entrez le nombre x : ")
+            in_y = raw_input("Entrez le nombre y : ")
+            if not (str_is_numeric(in_x) and str_is_numeric(in_y)):
+                print("Vous ne pouvez entrer que des nombres !")
+            else:
+                break
+        x, y = float(in_x), float(in_y)
+        print("f(x, y) = {0:.3f}".format(f_4_1(x, y)))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+#########################
+# Exercice 4.2
+#########################
+def bidon(s):
+    return [s[0], s[-1], len(s)]
+
+
+def demi(s):
+    return s[:int(floor(len(s) / 2))]
+
+
+def censure(s):
+    return s[0] + (len(s) - 2) * "#" + s[-1]
+
+
+def exercise_4_2():
+    test_again = True
+    while test_again:  # Infinite loop. Will break out when all conditions are verified.
+        in_str = raw_input("Entrez une chaîne de caractère :")
+        print("bidon(str)   = {}".format(bidon(in_str)))
+        print("demi(str)    = {}".format(demi(in_str)))
+        print("censure(str) = {}".format(censure(in_str)))
+        answer = raw_input("Voulez-vous tester le programme de nouveau ? (y/n) : ")
+        if answer != "y":
+            test_again = False
+        else:
+            print("")
+
+
+"""
+A partir de l'exercice 4.3, je n'écris plus que les fonctions à moins que des tests ne soient demandés.
+"""
+
+
+#########################
+# Exercice 4.3
+#########################
+def avg(nums):
+    total = 0
+    for n in nums:
+        total += n
+    return float(total) / len(nums)
+
+
+def sum_f(n, f):
+    total = 0
+    for i in range(0, n + 1):
+        total += f(i)
+    return total
+
+
+def is_prime(n):
+    for i in range(2, n - 1):
+        if modf(float(n) / i)[0] == 0:
+            return False
+    return True
+
+
+#########################
+# Exercice 4.4
+#########################
+def u_f(n, x0, f):
+    u = x0
+    for i in range(1, n + 1):
+        u = f(u)
+    return u
+
+
+#########################
+# Exercice 4.4
+#########################
+def pgcd_no_rec(n, m):
+    pgcd = 1
+    for i in range(2, min(n, m) + 1):
+        if n % i == m % i == 0:
+            pgcd = i
+    return pgcd
+
+
+def pgcd_rec(n, m):
+    print("")
+    # TODO
+
+
+def fact_no_rec(n):
+    res = 1
+    for i in range(1, n):
+        res *= i
+    return res
+
+
+def fact_rec(n):
+    if n == 1:
+        return 1
+    else:
+        return n * fact_rec(n - 1)
 
 
 #########################
