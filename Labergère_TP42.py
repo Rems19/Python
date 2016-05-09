@@ -65,6 +65,15 @@ def cust_round(x, base):
     return int(base * round(float(x) / base))
 
 
+def print_matrix(matrix):
+    print("")
+    print(" -" + len(matrix) * " -")
+    for i in range(len(matrix)):
+        print("| {} |".format(" ".join(str(n) for n in matrix[i])))
+    print(" -" + len(matrix) * " -")
+    print("")
+
+
 """
 CHAPITRE 1
 """
@@ -1149,7 +1158,7 @@ def u_f(n, x0, f):
 
 
 #########################
-# Exercice 4.4
+# Exercice 4.5
 #########################
 def pgcd_no_rec(n, m):
     pgcd = 1
@@ -1176,6 +1185,47 @@ def fact_rec(n):
         return 1
     else:
         return n * fact_rec(n - 1)
+
+
+#########################
+# Exercice 4.6
+#########################
+"""
+1. Non valable car chaque ligne est le même objet, on ne peut pas les modifier indépendemment.
+"""
+
+
+def m_null(n, m):
+    assert n > 0 and m > 0
+    matrix = []
+    for i in range(n):
+        matrix.append([])
+        for j in range(m):
+            matrix[i].append(0)
+    return matrix
+
+
+def m_identite(n):
+    assert n > 0
+    matrix = []
+    for i in range(n):
+        matrix.append([])
+        for j in range(n):
+            matrix[i].append(0 if i != j else 1)
+    return matrix
+
+
+def m_copy(matrix):
+    new_matrix = []
+    for i in range(len(matrix)):
+        new_matrix.append([])
+        for j in range(len(matrix[i])):
+            new_matrix[i].append(matrix[i][j])
+    return new_matrix
+
+
+def m_dim(matrix):
+    return len(matrix), len(matrix[0])
 
 
 #########################
@@ -1220,4 +1270,10 @@ def main():
     print("Au revoir !")
 
 
-main()
+# main()
+id4 = m_identite(4)
+copy = m_copy(id4)
+copy[0][0] = 10
+print_matrix(copy)
+print_matrix(id4)
+print(m_dim(m_null(10, 5)))
