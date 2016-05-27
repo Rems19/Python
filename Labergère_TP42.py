@@ -1238,6 +1238,162 @@ def m_dim(matrix):
     return len(matrix), len(matrix[0])
 
 
+def m_transpose(matrix):
+    new_matrix = []
+    for i in range(len(matrix)):
+        new_matrix.append([])
+        for j in range(len(matrix)):
+            new_matrix[i].insert(j, matrix[j][i])
+    return new_matrix
+
+
+def m_sum(matrix_a, matrix_b):
+    assert len(matrix_a) == len(matrix_b) and len(matrix_a[0]) == len(matrix_b[0])
+    new_matrix = []
+    for i in range(len(matrix_a)):
+        new_matrix.append([])
+        for j in range(len(matrix_a[0])):
+            new_matrix[i].append(matrix_a[i][j] + matrix_b[i][j])
+    return new_matrix
+
+
+def m_multiply(matrix_a, matrix_b):
+    assert len(matrix_a[0]) == len(matrix_b)
+    new_matrix = []
+    for i in range(len(matrix_a)):
+        new_matrix.append([])
+        for j in range(len(matrix_b[0])):
+            c = 0
+            for line_b in range(len(matrix_b)):
+                c += matrix_a[i][line_b] * matrix_b[line_b][j]
+            new_matrix[i].append(c)
+    return new_matrix
+
+
+def m_scal_multiply(matrix, factor):
+    new_matrix = []
+    for i in range(len(matrix)):
+        new_matrix.append([])
+        for j in range(len(matrix[0])):
+            new_matrix[i].append(matrix[i][j] * factor)
+    return new_matrix
+
+
+#########################
+# Exercice 4.7
+#########################
+def est_ensemble(l):
+    for elem in l:
+        if l.count(elem) > 1:
+            return False
+    return True
+
+
+def appartient(elem, l):
+    return elem in l
+
+
+def egale(list_a, list_b):
+    if len(list_a) != len(list_b):
+        return False
+    for elem in list_a:
+        if elem not in list_b:
+            return False
+    return True
+
+
+def ajoute(elem, l):
+    if elem not in l:
+        l.append(elem)
+    return l
+
+
+def union(list_a, list_b):
+    new_list = list(list_a)
+    for elem in list_b:
+        ajoute(elem, new_list)
+    return new_list
+
+
+def inter(list_a, list_b):
+    new_list = []
+    for elem in list_a:
+        if elem in list_b:
+            ajoute(elem, new_list)
+    return new_list
+
+
+def prive_de(list_a, list_b):
+    new_list = list(list_a)
+    for elem in list_a:
+        if elem in list_b:
+            new_list.remove(elem)
+    return new_list
+
+
+def diff_sym(list_a, list_b):
+    return union(prive_de(list_a, list_b), prive_de(list_b, list_a))
+
+
+#########################
+# Exercice 4.8
+#########################
+alphabet = baseChars[10:].lower()
+
+
+def valeur(char):
+    return alphabet.find(char)
+
+
+def lettre(index):
+    return alphabet[index]
+
+
+def normalize(string):
+    new_string = string.lower()
+    for char in new_string:
+        if char not in alphabet:
+            new_string = new_string.replace(char, "")
+    return new_string
+
+
+def code(string):
+    indexes = []
+    for char in normalize(string):
+        indexes.append(alphabet.find(char))
+    return indexes
+
+
+def decode(indexes):
+    string = ""
+    for index in indexes:
+        string += alphabet[index]
+    return string
+
+
+def codage_cesar(string, key):
+    indexes = code(normalize(string))
+    for i in range(len(indexes)):
+        indexes[i] = indexes[i] + key if indexes[i] + key < len(alphabet) else indexes[i] + key - 26
+    return decode(indexes)
+
+
+def decodage_cesar(coded, key):
+    indexes = code(coded)
+    for i in range(len(indexes)):
+        indexes[i] = indexes[i] - key if indexes[i] - key >= 0 else indexes[i] - key + 26
+    return decode(indexes)
+
+
+def cle_code(coded):
+    char_numbers = {}
+    for char in coded:
+        if char not in char_numbers.keys():
+            char_numbers[char] = coded.count(char)
+    max, char_max = 0, ""
+    for key, value in char_numbers.iteritems():
+
+
 #########################
 # Main Function
 #########################
@@ -1281,9 +1437,22 @@ def main():
 
 
 # main()
-id4 = m_identite(4)
-copy = m_copy(id4)
-copy[0][0] = 10
-print_matrix(copy)
-print_matrix(id4)
-print(m_dim(m_null(10, 5)))
+code = "lujyfwavnyhwoplsljopmmyltluawhykljhshnlhbzzpjvuubjvttlsljopmmylkljlzhyvbsljvklkljlzhylzabult" \
+        "laovklkljopmmyltluaaylzzptwslbapspzllwhyqbslzjlzhykhuzzlzjvyylzwvukhujlzzljylalzslalealjopmm" \
+        "ylzviaplualuyltwshjhuajohxblslaaylkbalealjshpyvypnpuhswhybulslaaylhkpzahujlmpelavbqvbyzkbtlt" \
+        "ljvalkhuzsvykylklshswohilawvbyslzklyuplylzslaaylzkhuzsljhzkbukljhshnlhkyvpalvuylwylukhbkliba" \
+        "whyleltwslhcljbukljhshnlklayvpzclyzshkyvpalhlzayltwshjlwhykiklcpluallahpuzpqbzxbhdxbpklcplua" \
+        "gwbpzeklcpluahlajpszhnpakbulwlytbahapvujpyjbshpylklshswohilashsvunblbykbkljhshnlayvpzkhuzsle" \
+        "ltwsllcvxbljvuzapablshjslkbjopmmyltluaxbpszbmmpaklayhuztlaaylhbklzapuhahpylzpszhpaklqhxbpszh" \
+        "npakbujopmmyltluakljlzhywvbyxbljlsbpjpwbpzzlkljopmmylysltlzzhnlkhuzsljhzklshswohilashapusljo" \
+        "pmmylkljlzhyuhxblcpunazpejslzwvzzpislzfjvtwypzshjslubsslxbpultvkpmplwhzslalealpszhnpakbujhzw" \
+        "hyapjbsplykljopmmyltluawhyzbizapabapvutvuvhswohilapxbljlzzbizapabapvuzylwvzluazbybuwypujpwlh" \
+        "uhsvnblthpzzvuavialublzwhyklzwlytbahapvuzxblsjvuxblzklzslaaylzklshswohilakhuzsljhznlulyhsshj" \
+        "sllzakvuullwhyshwlytbahapvulasluvtiylkljslzwvzzpislzlzahsvyzzhuzjvttbultlzbylhcljjlsbpklzjop" \
+        "mmyltluazkljlzhyjljopmmyltluakljlzhyhwblaylbapspzljvttllsltluakbultlaovklwsbzjvtwsleljvttlsl" \
+        "jopmmylklcpnlulylzlbspsuvmmylhbjbulzljbypalkljvttbupjhapvuhjhbzlkbaylzmhpisluvtiylkljslzjlxb" \
+        "pwlytlaklzzhflyzfzalthapxbltluajlsslzjpxbhukshtlaovklkljopmmyltlualzajvuublthpzhbzzpwhyjlxbl" \
+        "jvttlavbalujvkhnlwhyzbizapabapvutvuvhswohilapxblpswlbalaylaylzyhwpkltluajhzzlwhyhuhsfzlklmyl" \
+        "xblujlzjlyahpulzslaaylzhwwhyhpzzluailhbjvbwwsbzzvbcluaxblslzhbaylzkhuzbulshunbluhabylssl"
+
+cle_code(code)
