@@ -16,7 +16,6 @@ from __future__ import division
 from math import *
 import sys
 
-
 # Adding compatibility for Python 3+
 version = sys.version.split(" ")[0]
 print("")
@@ -25,9 +24,9 @@ if version.startswith("3"):
     print("Adding compatibility functions for Python 3")
     print("")
 
+
     def raw_input(string):
         return input(string)
-
 
 baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -747,7 +746,7 @@ def exercise_2_11():
             in_base = raw_input("En quelle base avez-vous entré votre nombre ? ")
             to_base = raw_input("En quelle base voulez-vous le convertir ? ")
             if not (str_is_int(in_base) and str_is_int(to_base) and 2 <= int(in_base) <= 36 and 2 <= int(to_base) <= 36
-                            and str_is_base(in_nb, int(in_base))):
+                    and str_is_base(in_nb, int(in_base))):
                 print("Vous devez entrer un nombre quelconque et des bases entre 2 et 36 !")
             else:
                 break
@@ -969,12 +968,12 @@ def exercise_3_7():
     while test_again:  # Infinite loop. Will break out when all conditions are verified.
         freq = dict()
         in_str = raw_input("Entrez une chaîne de caractères : ")
-        in_str = str(in_str).replace(" ", "").replace(".", "").replace("'", "").replace("’", "").replace("?", "")\
-            .replace(",", "").replace("!", "").replace("(", "").replace(")", "").replace("-", "").replace("“", "")\
-            .replace(";", "").replace(":", "").replace("_", "").replace("é", "e").replace("è", "e").replace("”", "")\
-            .replace("ê", "e").replace("à", "a").replace("ù", "u").replace("û", "u").replace("â", "a")\
-            .replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ç", "c").replace("ë", "e")\
-            .replace("\"", "").replace("–", "").replace("\n", "").replace("â", "a").replace("€", "")\
+        in_str = str(in_str).replace(" ", "").replace(".", "").replace("'", "").replace("’", "").replace("?", "") \
+            .replace(",", "").replace("!", "").replace("(", "").replace(")", "").replace("-", "").replace("“", "") \
+            .replace(";", "").replace(":", "").replace("_", "").replace("é", "e").replace("è", "e").replace("”", "") \
+            .replace("ê", "e").replace("à", "a").replace("ù", "u").replace("û", "u").replace("â", "a") \
+            .replace("î", "i").replace("ï", "i").replace("ô", "o").replace("ç", "c").replace("ë", "e") \
+            .replace("\"", "").replace("–", "").replace("\n", "").replace("â", "a").replace("€", "") \
             .replace("œ", "oe").lower()
         for c in in_str:
             freq[c] = (freq[c] + 1) if c in freq.keys() else 1
@@ -1390,8 +1389,15 @@ def cle_code(coded):
     for char in coded:
         if char not in char_numbers.keys():
             char_numbers[char] = coded.count(char)
-    max, char_max = 0, ""
-    for key, value in char_numbers.iteritems():
+    max_nb, char_max = 0, ""
+    for key, value in char_numbers.items():
+        if value > max_nb:
+            char_max = key
+            max_nb = value
+    print(char_numbers)
+    print("Max : " + char_max)
+    index = alphabet.find(char_max)
+    return index - alphabet.find("e")
 
 
 #########################
@@ -1437,22 +1443,24 @@ def main():
 
 
 # main()
-code = "lujyfwavnyhwoplsljopmmyltluawhykljhshnlhbzzpjvuubjvttlsljopmmylkljlzhyvbsljvklkljlzhylzabult" \
-        "laovklkljopmmyltluaaylzzptwslbapspzllwhyqbslzjlzhykhuzzlzjvyylzwvukhujlzzljylalzslalealjopmm" \
-        "ylzviaplualuyltwshjhuajohxblslaaylkbalealjshpyvypnpuhswhybulslaaylhkpzahujlmpelavbqvbyzkbtlt" \
-        "ljvalkhuzsvykylklshswohilawvbyslzklyuplylzslaaylzkhuzsljhzkbukljhshnlhkyvpalvuylwylukhbkliba" \
-        "whyleltwslhcljbukljhshnlklayvpzclyzshkyvpalhlzayltwshjlwhykiklcpluallahpuzpqbzxbhdxbpklcplua" \
-        "gwbpzeklcpluahlajpszhnpakbulwlytbahapvujpyjbshpylklshswohilashsvunblbykbkljhshnlayvpzkhuzsle" \
-        "ltwsllcvxbljvuzapablshjslkbjopmmyltluaxbpszbmmpaklayhuztlaaylhbklzapuhahpylzpszhpaklqhxbpszh" \
-        "npakbujopmmyltluakljlzhywvbyxbljlsbpjpwbpzzlkljopmmylysltlzzhnlkhuzsljhzklshswohilashapusljo" \
-        "pmmylkljlzhyuhxblcpunazpejslzwvzzpislzfjvtwypzshjslubsslxbpultvkpmplwhzslalealpszhnpakbujhzw" \
-        "hyapjbsplykljopmmyltluawhyzbizapabapvutvuvhswohilapxbljlzzbizapabapvuzylwvzluazbybuwypujpwlh" \
-        "uhsvnblthpzzvuavialublzwhyklzwlytbahapvuzxblsjvuxblzklzslaaylzklshswohilakhuzsljhznlulyhsshj" \
-        "sllzakvuullwhyshwlytbahapvulasluvtiylkljslzwvzzpislzlzahsvyzzhuzjvttbultlzbylhcljjlsbpklzjop" \
-        "mmyltluazkljlzhyjljopmmyltluakljlzhyhwblaylbapspzljvttllsltluakbultlaovklwsbzjvtwsleljvttlsl" \
-        "jopmmylklcpnlulylzlbspsuvmmylhbjbulzljbypalkljvttbupjhapvuhjhbzlkbaylzmhpisluvtiylkljslzjlxb" \
-        "pwlytlaklzzhflyzfzalthapxbltluajlsslzjpxbhukshtlaovklkljopmmyltlualzajvuublthpzhbzzpwhyjlxbl" \
-        "jvttlavbalujvkhnlwhyzbizapabapvutvuvhswohilapxblpswlbalaylaylzyhwpkltluajhzzlwhyhuhsfzlklmyl" \
-        "xblujlzjlyahpulzslaaylzhwwhyhpzzluailhbjvbwwsbzzvbcluaxblslzhbaylzkhuzbulshunbluhabylssl"
+coded_str = "lujyfwavnyhwoplsljopmmyltluawhykljhshnlhbzzpjvuubjvttlsljopmmylkljlzhyvbsljvklkljlzhylzabult" \
+            "laovklkljopmmyltluaaylzzptwslbapspzllwhyqbslzjlzhykhuzzlzjvyylzwvukhujlzzljylalzslalealjopmm" \
+            "ylzviaplualuyltwshjhuajohxblslaaylkbalealjshpyvypnpuhswhybulslaaylhkpzahujlmpelavbqvbyzkbtlt" \
+            "ljvalkhuzsvykylklshswohilawvbyslzklyuplylzslaaylzkhuzsljhzkbukljhshnlhkyvpalvuylwylukhbkliba" \
+            "whyleltwslhcljbukljhshnlklayvpzclyzshkyvpalhlzayltwshjlwhykiklcpluallahpuzpqbzxbhdxbpklcplua" \
+            "gwbpzeklcpluahlajpszhnpakbulwlytbahapvujpyjbshpylklshswohilashsvunblbykbkljhshnlayvpzkhuzsle" \
+            "ltwsllcvxbljvuzapablshjslkbjopmmyltluaxbpszbmmpaklayhuztlaaylhbklzapuhahpylzpszhpaklqhxbpszh" \
+            "npakbujopmmyltluakljlzhywvbyxbljlsbpjpwbpzzlkljopmmylysltlzzhnlkhuzsljhzklshswohilashapusljo" \
+            "pmmylkljlzhyuhxblcpunazpejslzwvzzpislzfjvtwypzshjslubsslxbpultvkpmplwhzslalealpszhnpakbujhzw" \
+            "hyapjbsplykljopmmyltluawhyzbizapabapvutvuvhswohilapxbljlzzbizapabapvuzylwvzluazbybuwypujpwlh" \
+            "uhsvnblthpzzvuavialublzwhyklzwlytbahapvuzxblsjvuxblzklzslaaylzklshswohilakhuzsljhznlulyhsshj" \
+            "sllzakvuullwhyshwlytbahapvulasluvtiylkljslzwvzzpislzlzahsvyzzhuzjvttbultlzbylhcljjlsbpklzjop" \
+            "mmyltluazkljlzhyjljopmmyltluakljlzhyhwblaylbapspzljvttllsltluakbultlaovklwsbzjvtwsleljvttlsl" \
+            "jopmmylklcpnlulylzlbspsuvmmylhbjbulzljbypalkljvttbupjhapvuhjhbzlkbaylzmhpisluvtiylkljslzjlxb" \
+            "pwlytlaklzzhflyzfzalthapxbltluajlsslzjpxbhukshtlaovklkljopmmyltlualzajvuublthpzhbzzpwhyjlxbl" \
+            "jvttlavbalujvkhnlwhyzbizapabapvutvuvhswohilapxblpswlbalaylaylzyhwpkltluajhzzlwhyhuhsfzlklmyl" \
+            "xblujlzjlyahpulzslaaylzhwwhyhpzzluailhbjvbwwsbzzvbcluaxblslzhbaylzkhuzbulshunbluhabylssl"
+cle = cle_code(coded_str)
+print("Cle : " + str(cle))
+print(decodage_cesar(coded_str, cle))
 
-cle_code(code)
